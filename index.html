@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jacob의 바이브코딩 스튜디오</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    html {
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(
+        to bottom,
+        #ffffff 0%,
+        #e8f6ff 42%,
+        #6bb8f0 100%
+      );
+      background-attachment: fixed;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(1.75rem, 5vw, 3rem);
+      font-weight: 600;
+      color: #001f3f;
+    }
+
+    .subtitle {
+      font-size: clamp(0.875rem, 2.2vw, 1.0625rem);
+      font-weight: 400;
+      color: #64748b;
+    }
+
+    .btn-start {
+      margin-top: 0.5rem;
+      padding: 0.65rem 1.75rem;
+      font-size: 1rem;
+      font-family: inherit;
+      font-weight: 600;
+      color: #fff;
+      background-color: #2563eb;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    .btn-start:hover {
+      background-color: #1d4ed8;
+    }
+
+    .btn-start:active {
+      background-color: #1e40af;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>Jacob의 바이브코딩 스튜디오</h1>
+    <p class="subtitle">2026년 5월16일, AI와 함께 코딩 시작</p>
+    <button type="button" class="btn-start" onclick="alert('환영합니다!')">시작하기</button>
+  </div>
+</body>
+</html>
