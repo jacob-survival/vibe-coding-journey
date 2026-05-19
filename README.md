@@ -36,11 +36,12 @@ Versioning   : GitHub
 
 📈 Progress
 
- Day 1 — 환경 세팅 (Cursor, GitHub, 첫 웹페이지)
- Day 2 — HTML/CSS 감 잡기 & GitHub 첫 push
- Day 3 — Tailwind CSS & 반응형 디자인
- Day 4 — ...
-
+- [x] Day 1 — 환경 세팅
+- [x] Day 2 — HTML/CSS + GitHub 첫 push
+- [x] Day 3 — Tailwind 반응형 디자인
+- [x] Day 4 — JavaScript & 데이터 저장
+- [ ] Day 5 — 메뉴 추가/삭제 기능
+      
 
 💡 Learning Philosophy
 
