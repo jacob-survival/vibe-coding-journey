@@ -4,7 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>백씨네 식탁</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html {
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      letter-spacing: -0.02em;
+    }
+    h1, h2, h3 {
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    button {
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+  </style>
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[radial-gradient(circle_at_top_left,#fde68a_0,#fff7ed_34%,#ffe4e6_100%)] text-stone-800 antialiased">
   <div class="pointer-events-none fixed -left-12 top-14 h-36 w-36 rounded-full bg-orange-200/40 blur-3xl"></div>
@@ -12,6 +27,19 @@
 
   <main class="relative z-10 flex min-h-screen items-center justify-center px-4 py-6 sm:px-6 sm:py-14">
     <section class="w-full max-w-4xl rounded-[1.75rem] border border-orange-100 bg-white/85 px-5 py-8 text-center shadow-2xl shadow-orange-200/50 backdrop-blur sm:rounded-[2.5rem] sm:px-10 sm:py-14">
+      <div class="mb-5 flex flex-col items-center gap-2">
+        <label for="family-select" class="text-sm font-semibold text-stone-600">누구로 표시할까요?</label>
+        <select
+          id="family-select"
+          class="min-h-12 w-full max-w-xs rounded-2xl border-2 border-orange-200 bg-white px-4 py-2 text-base font-semibold text-stone-800 shadow-sm focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200"
+        >
+          <option value="엄마">엄마</option>
+          <option value="아빠">아빠</option>
+          <option value="백지원">백지원</option>
+          <option value="백승원">백승원</option>
+        </select>
+      </div>
+
       <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-orange-100 to-rose-100 text-3xl shadow-inner shadow-orange-200 sm:mb-5 sm:h-20 sm:w-20 sm:text-4xl">
         🍚
       </div>
@@ -23,6 +51,13 @@
       <h1 class="text-3xl font-extrabold tracking-tight text-stone-900 min-[390px]:text-4xl sm:text-6xl">
         백씨네 식탁
       </h1>
+
+      <div class="mx-auto mt-4 max-w-md rounded-2xl border-2 border-amber-300 bg-amber-100 px-5 py-4 shadow-lg shadow-amber-200/70 sm:mt-5 sm:px-6 sm:py-5">
+        <p class="text-xs font-bold tracking-wide text-amber-700 sm:text-sm">오늘의 인기 메뉴</p>
+        <p id="top-menu-text" class="mt-1 text-base font-extrabold text-amber-900 sm:text-lg">
+          아직 투표가 없어요
+        </p>
+      </div>
 
       <p class="mt-3 text-base font-semibold text-stone-700 min-[390px]:text-lg sm:text-2xl">
         엄마 저녁밥 뭐에요?
@@ -44,10 +79,12 @@
         </p>
 
         <div class="mt-6 grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3 md:gap-5">
-          <article class="menu-card rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
-            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-3xl sm:h-16 sm:w-16 sm:text-4xl">🥓</div>
-            <h3 class="mt-4 text-lg font-extrabold text-stone-900 sm:mt-5 sm:text-xl">삼겹살구이</h3>
-            <p class="mt-2 text-sm font-medium leading-relaxed text-stone-500">노릇하게 구워 상추쌈과 함께 먹기 좋은 가족 인기 메뉴예요.</p>
+          <article data-menu="콩우동" class="menu-card rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
+            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-3xl sm:h-16 sm:w-16 sm:text-4xl">🍜</div>
+            <h3 class="mt-4 text-lg font-extrabold text-stone-900 sm:mt-5 sm:text-xl">콩우동</h3>
+            <p class="mt-2 text-sm font-medium leading-relaxed text-stone-500">고소한 콩국물과 쫄깃한 면이 어울리는 담백한 메뉴예요.</p>
+            <p class="mt-3 text-base font-bold text-rose-500">❤️ <span class="like-count">0</span></p>
+            <p class="like-voters mt-2 hidden text-sm font-medium text-amber-700"></p>
             <button
               type="button"
               class="like-button mt-4 min-h-12 w-full touch-manipulation rounded-full bg-rose-100 px-7 py-2 text-sm font-bold text-rose-600 transition hover:bg-rose-200 active:scale-95 sm:mt-5 sm:w-auto"
@@ -56,10 +93,12 @@
             </button>
           </article>
 
-          <article class="menu-card rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
+          <article data-menu="김치찌개" class="menu-card rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
             <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-3xl sm:h-16 sm:w-16 sm:text-4xl">🍲</div>
             <h3 class="mt-4 text-lg font-extrabold text-stone-900 sm:mt-5 sm:text-xl">김치찌개</h3>
             <p class="mt-2 text-sm font-medium leading-relaxed text-stone-500">칼칼하고 따뜻한 국물로 밥 한 공기 뚝딱 먹기 좋아요.</p>
+            <p class="mt-3 text-base font-bold text-rose-500">❤️ <span class="like-count">0</span></p>
+            <p class="like-voters mt-2 hidden text-sm font-medium text-amber-700"></p>
             <button
               type="button"
               class="like-button mt-4 min-h-12 w-full touch-manipulation rounded-full bg-rose-100 px-7 py-2 text-sm font-bold text-rose-600 transition hover:bg-rose-200 active:scale-95 sm:mt-5 sm:w-auto"
@@ -68,10 +107,12 @@
             </button>
           </article>
 
-          <article class="menu-card rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
+          <article data-menu="닭볶음탕" class="menu-card rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
             <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-3xl sm:h-16 sm:w-16 sm:text-4xl">🍗</div>
             <h3 class="mt-4 text-lg font-extrabold text-stone-900 sm:mt-5 sm:text-xl">닭볶음탕</h3>
             <p class="mt-2 text-sm font-medium leading-relaxed text-stone-500">감자와 닭고기가 듬뿍 들어가 든든한 저녁으로 잘 어울려요.</p>
+            <p class="mt-3 text-base font-bold text-rose-500">❤️ <span class="like-count">0</span></p>
+            <p class="like-voters mt-2 hidden text-sm font-medium text-amber-700"></p>
             <button
               type="button"
               class="like-button mt-4 min-h-12 w-full touch-manipulation rounded-full bg-rose-100 px-7 py-2 text-sm font-bold text-rose-600 transition hover:bg-rose-200 active:scale-95 sm:mt-5 sm:w-auto"
@@ -85,18 +126,190 @@
   </main>
 
   <script>
-    const likeButtons = document.querySelectorAll(".like-button");
+    document.addEventListener("DOMContentLoaded", function () {
+      const STORAGE_KEY = "baekfamily-menu-likes";
+      const LAST_PICK_KEY = "baekfamily-last-pick";
+      const USER_KEY = "baekfamily-current-user";
+      const FAMILY_ORDER = ["엄마", "아빠", "백지원", "백승원"];
 
-    likeButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const card = button.closest(".menu-card");
+      const topMenuText = document.getElementById("top-menu-text");
+      const familySelect = document.getElementById("family-select");
 
-        card.classList.remove("border-orange-100/70", "shadow-orange-100/60");
-        card.classList.add("border-orange-400", "bg-orange-50/80", "shadow-orange-200");
-        button.classList.remove("bg-rose-100", "text-rose-600");
-        button.classList.add("bg-orange-100", "text-orange-700");
-        button.textContent = "❤️ 좋아요!";
+      function loadLikes() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function saveLikes(data) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+
+      function getMenuItem(likes, menu) {
+        const raw = likes[menu];
+        if (raw && Array.isArray(raw.voters)) {
+          return { voters: raw.voters.slice() };
+        }
+        return { voters: [] };
+      }
+
+      function getCurrentUser() {
+        return familySelect ? familySelect.value : "엄마";
+      }
+
+      function sortVoters(voters) {
+        return FAMILY_ORDER.filter(function (name) {
+          return voters.indexOf(name) !== -1;
+        });
+      }
+
+      function getMenuCount(menu) {
+        const card = document.querySelector('[data-menu="' + menu + '"]');
+        if (!card) return 0;
+        return Number(card.querySelector(".like-count").textContent) || 0;
+      }
+
+      function hasAnyVotes() {
+        let total = 0;
+        document.querySelectorAll(".menu-card").forEach(function (card) {
+          total += Number(card.querySelector(".like-count").textContent) || 0;
+        });
+        return total > 0;
+      }
+
+      function showPopular(menu, count) {
+        if (!topMenuText) return;
+        topMenuText.textContent = "🏆 오늘의 1위: " + menu + " (❤️ " + count + ")";
+      }
+
+      function showLastPicked(menu) {
+        if (!topMenuText) return;
+        localStorage.setItem(LAST_PICK_KEY, menu);
+        showPopular(menu, getMenuCount(menu));
+      }
+
+      function refreshPopularMenu() {
+        if (!topMenuText) return;
+
+        if (!hasAnyVotes()) {
+          topMenuText.textContent = "아직 투표가 없어요";
+          localStorage.removeItem(LAST_PICK_KEY);
+          return;
+        }
+
+        const lastPick = localStorage.getItem(LAST_PICK_KEY);
+        if (lastPick && getMenuCount(lastPick) > 0) {
+          showPopular(lastPick, getMenuCount(lastPick));
+          return;
+        }
+
+        let bestMenu = "";
+        let bestCount = 0;
+        document.querySelectorAll(".menu-card").forEach(function (card) {
+          const menu = card.getAttribute("data-menu");
+          const count = Number(card.querySelector(".like-count").textContent) || 0;
+          if (count > bestCount) {
+            bestCount = count;
+            bestMenu = menu;
+          }
+        });
+        showPopular(bestMenu, bestCount);
+      }
+
+      function updateVotersLine(card, voters) {
+        const votersEl = card.querySelector(".like-voters");
+        if (!voters.length) {
+          votersEl.classList.add("hidden");
+          votersEl.textContent = "";
+          return;
+        }
+        votersEl.textContent = "💛 " + sortVoters(voters).join(", ") + " 좋아함";
+        votersEl.classList.remove("hidden");
+      }
+
+      function setButtonLiked(card, button, isLiked) {
+        if (isLiked) {
+          button.textContent = "❤️ 좋아요!";
+          card.classList.add("border-orange-400", "bg-orange-50/80", "shadow-orange-200");
+          card.classList.remove("border-orange-100/70", "shadow-orange-100/60");
+          button.classList.add("bg-orange-400", "text-white", "hover:bg-orange-500");
+          button.classList.remove("bg-rose-100", "text-rose-600", "hover:bg-rose-200");
+        } else {
+          button.textContent = "좋아요";
+          card.classList.remove("border-orange-400", "bg-orange-50/80", "shadow-orange-200");
+          card.classList.add("border-orange-100/70", "shadow-orange-100/60");
+          button.classList.remove("bg-orange-400", "text-white", "hover:bg-orange-500");
+          button.classList.add("bg-rose-100", "text-rose-600", "hover:bg-rose-200");
+        }
+      }
+
+      function renderCard(card, menu, likes, skipTopUpdate) {
+        const button = card.querySelector(".like-button");
+        const item = getMenuItem(likes, menu);
+        const user = getCurrentUser();
+        const count = item.voters.length;
+
+        card.querySelector(".like-count").textContent = count;
+        updateVotersLine(card, item.voters);
+        setButtonLiked(card, button, item.voters.indexOf(user) !== -1);
+
+        if (count > 0) {
+          card.classList.add("border-orange-400", "bg-orange-50/80", "shadow-orange-200");
+          card.classList.remove("border-orange-100/70", "shadow-orange-100/60");
+        }
+      }
+
+      function refreshAllCards(skipTopUpdate) {
+        const likes = loadLikes();
+        document.querySelectorAll(".menu-card").forEach(function (card) {
+          renderCard(card, card.getAttribute("data-menu"), likes, true);
+        });
+        if (!skipTopUpdate) refreshPopularMenu();
+      }
+
+      if (familySelect) {
+        const savedUser = localStorage.getItem(USER_KEY);
+        if (savedUser && FAMILY_ORDER.indexOf(savedUser) !== -1) {
+          familySelect.value = savedUser;
+        }
+        familySelect.addEventListener("change", function () {
+          localStorage.setItem(USER_KEY, familySelect.value);
+          refreshAllCards(true);
+        });
+      }
+
+      document.querySelectorAll(".menu-card").forEach(function (card) {
+        const menu = card.getAttribute("data-menu");
+        const button = card.querySelector(".like-button");
+
+        button.addEventListener("click", function () {
+          const likes = loadLikes();
+          const item = getMenuItem(likes, menu);
+          const user = getCurrentUser();
+          const index = item.voters.indexOf(user);
+
+          if (index !== -1) {
+            item.voters.splice(index, 1);
+          } else {
+            item.voters.push(user);
+          }
+
+          likes[menu] = item;
+          saveLikes(likes);
+          renderCard(card, menu, likes, true);
+
+          if (item.voters.indexOf(user) !== -1) {
+            showLastPicked(menu);
+          } else {
+            refreshPopularMenu();
+          }
+        });
       });
+
+      refreshAllCards(true);
+      refreshPopularMenu();
     });
   </script>
 </body>
