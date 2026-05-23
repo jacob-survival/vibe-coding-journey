@@ -19,6 +19,36 @@
       font-weight: 600;
       letter-spacing: -0.01em;
     }
+    .emoji-category-label {
+      margin-bottom: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #78716c;
+    }
+    .emoji-category + .emoji-category {
+      margin-top: 1.25rem;
+    }
+    .emoji-pick-btn {
+      display: flex;
+      height: 3.25rem;
+      width: 3.25rem;
+      touch-action: manipulation;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 9999px;
+      background: transparent;
+      font-size: 1.875rem;
+      line-height: 1;
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+    .emoji-pick-btn:hover {
+      background-color: #fff4df;
+    }
+    .emoji-pick-btn.is-selected {
+      background-color: #fb923c;
+      transform: scale(1.1);
+    }
   </style>
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[radial-gradient(circle_at_top_left,#fde68a_0,#fff7ed_34%,#ffe4e6_100%)] text-stone-800 antialiased">
@@ -70,6 +100,44 @@
         메뉴 보기
       </button>
 
+      <section class="mt-10 rounded-2xl border-2 border-orange-100 bg-[#fff8ef] px-5 py-6 text-left shadow-lg shadow-orange-100/60 sm:mt-12 sm:px-7">
+        <h2 class="text-center text-lg font-extrabold text-stone-900 sm:text-xl">새 메뉴 추가하기</h2>
+        <div class="mt-4 space-y-3">
+          <div>
+            <label for="menu-name" class="mb-1 block text-sm font-semibold text-stone-600">메뉴 이름</label>
+            <input
+              id="menu-name"
+              type="text"
+              placeholder="예: 초밥"
+              class="w-full rounded-xl border-2 border-orange-200 bg-white px-4 py-3 text-base text-stone-800 placeholder:text-stone-400 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200"
+            />
+          </div>
+          <div>
+            <div class="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+              <p class="text-sm font-semibold text-stone-600">이모지 1개</p>
+              <span id="emoji-selected" class="text-xs font-medium text-stone-400">이모지를 선택해주세요</span>
+            </div>
+            <div id="emoji-grid"></div>
+          </div>
+          <div>
+            <label for="menu-desc" class="mb-1 block text-sm font-semibold text-stone-600">간단한 설명</label>
+            <input
+              id="menu-desc"
+              type="text"
+              placeholder="예: 신선한 회와 밥이 어울려요"
+              class="w-full rounded-xl border-2 border-orange-200 bg-white px-4 py-3 text-base text-stone-800 placeholder:text-stone-400 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200"
+            />
+          </div>
+        </div>
+        <button
+          id="add-menu-btn"
+          type="button"
+          class="mt-5 min-h-12 w-full rounded-full bg-gradient-to-r from-orange-400 to-amber-400 px-6 py-3 text-base font-bold text-white shadow-md shadow-orange-200/70 transition hover:from-orange-500 hover:to-amber-500 active:scale-95"
+        >
+          + 메뉴 추가
+        </button>
+      </section>
+
       <section class="mt-10 sm:mt-14">
         <h2 class="text-xl font-extrabold text-stone-900 min-[390px]:text-2xl sm:text-3xl">
           오늘의 메뉴 후보
@@ -78,8 +146,9 @@
           마음에 드는 메뉴에 따뜻한 한 표를 남겨보세요.
         </p>
 
-        <div class="mt-6 grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3 md:gap-5">
-          <article data-menu="콩우동" class="menu-card rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
+        <div id="menu-grid" class="mt-6 grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3 md:gap-5">
+          <article data-menu="콩우동" class="menu-card relative rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
+            <button type="button" class="delete-menu-btn absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full text-xs text-stone-400 transition hover:bg-stone-100 hover:text-stone-600" aria-label="메뉴 삭제">❌</button>
             <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-3xl sm:h-16 sm:w-16 sm:text-4xl">🍜</div>
             <h3 class="mt-4 text-lg font-extrabold text-stone-900 sm:mt-5 sm:text-xl">콩우동</h3>
             <p class="mt-2 text-sm font-medium leading-relaxed text-stone-500">고소한 콩국물과 쫄깃한 면이 어울리는 담백한 메뉴예요.</p>
@@ -93,7 +162,8 @@
             </button>
           </article>
 
-          <article data-menu="김치찌개" class="menu-card rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
+          <article data-menu="김치찌개" class="menu-card relative rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
+            <button type="button" class="delete-menu-btn absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full text-xs text-stone-400 transition hover:bg-stone-100 hover:text-stone-600" aria-label="메뉴 삭제">❌</button>
             <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-3xl sm:h-16 sm:w-16 sm:text-4xl">🍲</div>
             <h3 class="mt-4 text-lg font-extrabold text-stone-900 sm:mt-5 sm:text-xl">김치찌개</h3>
             <p class="mt-2 text-sm font-medium leading-relaxed text-stone-500">칼칼하고 따뜻한 국물로 밥 한 공기 뚝딱 먹기 좋아요.</p>
@@ -107,7 +177,8 @@
             </button>
           </article>
 
-          <article data-menu="닭볶음탕" class="menu-card rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
+          <article data-menu="닭볶음탕" class="menu-card relative rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6">
+            <button type="button" class="delete-menu-btn absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full text-xs text-stone-400 transition hover:bg-stone-100 hover:text-stone-600" aria-label="메뉴 삭제">❌</button>
             <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-3xl sm:h-16 sm:w-16 sm:text-4xl">🍗</div>
             <h3 class="mt-4 text-lg font-extrabold text-stone-900 sm:mt-5 sm:text-xl">닭볶음탕</h3>
             <p class="mt-2 text-sm font-medium leading-relaxed text-stone-500">감자와 닭고기가 듬뿍 들어가 든든한 저녁으로 잘 어울려요.</p>
@@ -128,12 +199,32 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const STORAGE_KEY = "baekfamily-menu-likes";
+      const CUSTOM_MENUS_KEY = "baekfamily-custom-menus";
+      const DELETED_MENUS_KEY = "baekfamily-deleted-menus";
       const LAST_PICK_KEY = "baekfamily-last-pick";
       const USER_KEY = "baekfamily-current-user";
       const FAMILY_ORDER = ["엄마", "아빠", "백지원", "백승원"];
+      const CARD_CLASS =
+        "menu-card relative rounded-3xl border-2 border-orange-100/70 bg-white/90 p-5 shadow-lg shadow-orange-100/60 transition md:hover:-translate-y-1 md:hover:shadow-xl md:hover:shadow-orange-200/50 sm:p-6";
+      const DELETE_BTN_HTML =
+        '<button type="button" class="delete-menu-btn absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full text-xs text-stone-400 transition hover:bg-stone-100 hover:text-stone-600" aria-label="메뉴 삭제">❌</button>';
 
       const topMenuText = document.getElementById("top-menu-text");
       const familySelect = document.getElementById("family-select");
+      const menuGrid = document.getElementById("menu-grid");
+      const menuNameInput = document.getElementById("menu-name");
+      const menuDescInput = document.getElementById("menu-desc");
+      const addMenuBtn = document.getElementById("add-menu-btn");
+      const emojiGrid = document.getElementById("emoji-grid");
+      const emojiSelectedText = document.getElementById("emoji-selected");
+
+      const EMOJI_CATEGORIES = [
+        { label: "한식", emojis: ["🍚", "🍜", "🍲", "🥘", "🍛", "🍱"] },
+        { label: "일식·중식", emojis: ["🍣", "🍙", "🥟", "🍤", "🍝", "🍕"] },
+        { label: "양식", emojis: ["🍔", "🌮", "🥗", "🍳", "🥪", "🍞"] },
+        { label: "디저트·음료", emojis: ["🍰", "🍪", "🍩", "🍫", "☕", "🍵"] },
+      ];
+      let selectedEmoji = "";
 
       function loadLikes() {
         try {
@@ -145,6 +236,208 @@
 
       function saveLikes(data) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+
+      function loadCustomMenus() {
+        try {
+          return JSON.parse(localStorage.getItem(CUSTOM_MENUS_KEY) || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveCustomMenus(menus) {
+        localStorage.setItem(CUSTOM_MENUS_KEY, JSON.stringify(menus));
+      }
+
+      function loadDeletedMenus() {
+        try {
+          return JSON.parse(localStorage.getItem(DELETED_MENUS_KEY) || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveDeletedMenus(menus) {
+        localStorage.setItem(DELETED_MENUS_KEY, JSON.stringify(menus));
+      }
+
+      function getDeleteParticle(name) {
+        const code = name.charCodeAt(name.length - 1);
+        if (code < 0xac00 || code > 0xd7a3) return "를";
+        return (code - 0xac00) % 28 === 0 ? "를" : "을";
+      }
+
+      function menuExists(name) {
+        return !!document.querySelector('[data-menu="' + name + '"]');
+      }
+
+      function updateEmojiStatus() {
+        if (!emojiSelectedText) return;
+        if (selectedEmoji) {
+          emojiSelectedText.textContent = "선택됨: " + selectedEmoji;
+          emojiSelectedText.classList.remove("text-stone-400");
+          emojiSelectedText.classList.add("text-orange-600");
+        } else {
+          emojiSelectedText.textContent = "이모지를 선택해주세요";
+          emojiSelectedText.classList.add("text-stone-400");
+          emojiSelectedText.classList.remove("text-orange-600");
+        }
+      }
+
+      function selectEmoji(btn, emoji) {
+        selectedEmoji = emoji;
+        document.querySelectorAll(".emoji-pick-btn").forEach(function (pickBtn) {
+          pickBtn.classList.remove("is-selected");
+        });
+        btn.classList.add("is-selected");
+        updateEmojiStatus();
+      }
+
+      function initEmojiPicker() {
+        if (!emojiGrid) return;
+        emojiGrid.innerHTML = "";
+
+        EMOJI_CATEGORIES.forEach(function (category) {
+          const section = document.createElement("div");
+          section.className = "emoji-category";
+
+          const label = document.createElement("p");
+          label.className = "emoji-category-label";
+          label.textContent = category.label;
+          section.appendChild(label);
+
+          const row = document.createElement("div");
+          row.className =
+            "grid grid-cols-4 gap-3 max-[380px]:grid-cols-3 min-[480px]:grid-cols-6";
+
+          category.emojis.forEach(function (emoji) {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.textContent = emoji;
+            btn.className = "emoji-pick-btn";
+            btn.addEventListener("click", function () {
+              selectEmoji(btn, emoji);
+            });
+            row.appendChild(btn);
+          });
+
+          section.appendChild(row);
+          emojiGrid.appendChild(section);
+        });
+      }
+
+      function clearEmojiSelection() {
+        selectedEmoji = "";
+        document.querySelectorAll(".emoji-pick-btn").forEach(function (pickBtn) {
+          pickBtn.classList.remove("is-selected");
+        });
+        updateEmojiStatus();
+      }
+
+      function createMenuCard(name, emoji, description) {
+        const article = document.createElement("article");
+        article.setAttribute("data-menu", name);
+        article.setAttribute("data-custom", "true");
+        article.className = CARD_CLASS;
+        article.innerHTML =
+          DELETE_BTN_HTML +
+          '<div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-3xl sm:h-16 sm:w-16 sm:text-4xl">' +
+          emoji +
+          "</div>" +
+          '<h3 class="mt-4 text-lg font-extrabold text-stone-900 sm:mt-5 sm:text-xl">' +
+          name +
+          "</h3>" +
+          '<p class="mt-2 text-sm font-medium leading-relaxed text-stone-500">' +
+          description +
+          "</p>" +
+          '<p class="mt-3 text-base font-bold text-rose-500">❤️ <span class="like-count">0</span></p>' +
+          '<p class="like-voters mt-2 hidden text-sm font-medium text-amber-700"></p>' +
+          '<button type="button" class="like-button mt-4 min-h-12 w-full touch-manipulation rounded-full bg-rose-100 px-7 py-2 text-sm font-bold text-rose-600 transition hover:bg-rose-200 active:scale-95 sm:mt-5 sm:w-auto">좋아요</button>';
+        return article;
+      }
+
+      function bindLikeButton(card) {
+        if (card.dataset.bound === "true") return;
+        card.dataset.bound = "true";
+
+        const menu = card.getAttribute("data-menu");
+        const button = card.querySelector(".like-button");
+
+        button.addEventListener("click", function () {
+          const likes = loadLikes();
+          const item = getMenuItem(likes, menu);
+          const user = getCurrentUser();
+          const index = item.voters.indexOf(user);
+
+          if (index !== -1) {
+            item.voters.splice(index, 1);
+          } else {
+            item.voters.push(user);
+          }
+
+          likes[menu] = item;
+          saveLikes(likes);
+          renderCard(card, menu, likes, true);
+
+          if (item.voters.indexOf(user) !== -1) {
+            showLastPicked(menu);
+          } else {
+            refreshPopularMenu();
+          }
+        });
+      }
+
+      function bindDeleteButton(card) {
+        if (card.dataset.deleteBound === "true") return;
+        card.dataset.deleteBound = "true";
+
+        const menu = card.getAttribute("data-menu");
+        const deleteBtn = card.querySelector(".delete-menu-btn");
+        if (!deleteBtn) return;
+
+        deleteBtn.addEventListener("click", function () {
+          const particle = getDeleteParticle(menu);
+          const ok = confirm(menu + particle + " 삭제할까요?");
+          if (!ok) return;
+
+          if (card.getAttribute("data-custom") === "true") {
+            saveCustomMenus(
+              loadCustomMenus().filter(function (item) {
+                return item.name !== menu;
+              })
+            );
+          } else {
+            const deleted = loadDeletedMenus();
+            if (deleted.indexOf(menu) === -1) {
+              deleted.push(menu);
+              saveDeletedMenus(deleted);
+            }
+          }
+
+          const likes = loadLikes();
+          delete likes[menu];
+          saveLikes(likes);
+
+          if (localStorage.getItem(LAST_PICK_KEY) === menu) {
+            localStorage.removeItem(LAST_PICK_KEY);
+          }
+
+          card.remove();
+          refreshPopularMenu();
+        });
+      }
+
+      function bindCardActions(card) {
+        bindLikeButton(card);
+        bindDeleteButton(card);
+      }
+
+      function appendMenuCard(name, emoji, description) {
+        const card = createMenuCard(name, emoji, description);
+        menuGrid.appendChild(card);
+        bindCardActions(card);
+        renderCard(card, name, loadLikes(), true);
       }
 
       function getMenuItem(likes, menu) {
@@ -280,33 +573,55 @@
         });
       }
 
-      document.querySelectorAll(".menu-card").forEach(function (card) {
-        const menu = card.getAttribute("data-menu");
-        const button = card.querySelector(".like-button");
-
-        button.addEventListener("click", function () {
-          const likes = loadLikes();
-          const item = getMenuItem(likes, menu);
-          const user = getCurrentUser();
-          const index = item.voters.indexOf(user);
-
-          if (index !== -1) {
-            item.voters.splice(index, 1);
-          } else {
-            item.voters.push(user);
-          }
-
-          likes[menu] = item;
-          saveLikes(likes);
-          renderCard(card, menu, likes, true);
-
-          if (item.voters.indexOf(user) !== -1) {
-            showLastPicked(menu);
-          } else {
-            refreshPopularMenu();
-          }
-        });
+      loadDeletedMenus().forEach(function (name) {
+        const card = document.querySelector('[data-menu="' + name + '"]:not([data-custom])');
+        if (card) card.remove();
       });
+
+      document.querySelectorAll(".menu-card").forEach(function (card) {
+        bindCardActions(card);
+      });
+
+      loadCustomMenus().forEach(function (menu) {
+        if (menu.name && menu.emoji && menu.description) {
+          appendMenuCard(menu.name, menu.emoji, menu.description);
+        }
+      });
+
+      if (addMenuBtn) {
+        addMenuBtn.addEventListener("click", function () {
+          const name = menuNameInput.value.trim();
+          const description = menuDescInput.value.trim();
+
+          if (!name || !description) {
+            alert("모든 항목을 입력해주세요");
+            return;
+          }
+
+          if (!selectedEmoji) {
+            alert("이모지를 선택해주세요");
+            return;
+          }
+
+          if (menuExists(name)) {
+            alert("이미 같은 이름의 메뉴가 있어요");
+            return;
+          }
+
+          const customMenus = loadCustomMenus();
+          customMenus.push({ name: name, emoji: selectedEmoji, description: description });
+          saveCustomMenus(customMenus);
+
+          appendMenuCard(name, selectedEmoji, description);
+
+          menuNameInput.value = "";
+          menuDescInput.value = "";
+          clearEmojiSelection();
+          menuNameInput.focus();
+        });
+      }
+
+      initEmojiPicker();
 
       refreshAllCards(true);
       refreshPopularMenu();
